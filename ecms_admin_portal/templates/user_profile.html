@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "header.html" %}
+    <title>My Account</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../public/css/my_account.css" />
+  </head>
+  <body>
+    <div class="d-flex" style="min-height: 100vh">
+      {% include "sidebar.html" %}
+      <div class="container">
+        <!-- Page Title -->
+        <div class="row mb-4">
+          <div class="col text-center">
+            <h1 class="display-6">Profile</h1>
+            <p class="text-muted">Manage your profile</p>
+          </div>
+        </div>
+
+        <!-- Account Details Section -->
+        <div class="row ">
+          <div class="col-md-6">
+            <!-- Profile Card -->
+            <div class="id-card">
+              <!-- Header Section -->
+              <div class="row header-row">
+                  <div class="col-md-4 text-center">
+                      <img src= "{{ base_url }}{{ user_info.photo }}"alt="Profile Picture">
+                  </div>
+                  <div class="col-md-8">
+                      <h5>{{ user_info.full_name }}</h5>
+                      <p><strong>{{ user_info.email_id }}</strong></p>
+                  </div>
+              </div>
+              <hr>
+              <!-- Details Section -->
+              <div class="row">
+                  <!-- Column 1 -->
+                  <div class="col-md-5">
+                    <p><i class="bi bi-person-vcard "></i><strong> &nbsp; {{ user_info.name }} </strong> </p>
+                      <p><i class="bi bi-book "></i><strong> &nbsp; {{ user_info.course }} </strong></p>
+                      <p><i class="bi bi-building "></i> <strong>&nbsp; {{ user_info.university }} </strong></p>
+                  </div>
+                  <!-- Divider -->
+                  <div class="col-md-2">
+                      <div class="vertical-line"></div>
+                  </div>
+                  <!-- Column 2 -->
+                  <div class="col-md-5">
+                      <p><i class="bi bi-phone"></i><strong> &nbsp; {{ user_info.contact_number }} </strong></p>
+                      <p><i class="bi bi-gender-ambiguous"></i><strong> &nbsp; {{ user_info.gender }}</strong></p>
+                      <p><i class="bi bi-globe"></i><strong> &nbsp; {{ user_info.nationality }}</strong></p> 
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header bg-primary text-white">Account Settings</div>
+              <div class="card-body" style="vertical-align: middle;">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6>Change Password</h6>
+                    <span class="text-muted mb-0" style="font-size: 14px; line-height: 1.5;">Strengthen your account by ensuring<br> your password is strong</span>
+                  </div>
+                  <a href="/auth/change-pass" class="btn btn-outline-primary btn-sm my-btn" style="height: 40px; align-content: center;">
+                    Change
+                  </a>
+                </div>
+              </div>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap JS -->
+    {% include "footer.html" %}
+  </body>
+</html>

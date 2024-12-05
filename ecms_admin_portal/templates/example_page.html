@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "header.html" %}
+    <title>Example</title>
+</head>
+
+<body>
+    <!-- Main Layout -->
+    <div class="d-flex" style="min-height: 100vh;">
+
+        {% include "sidebar.html" %}
+
+        <!-- Main Content -->
+        <div class="flex-grow-1 p-4">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>Example</h3>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <select class="example-dropdown" name="state">
+                            <option value="AL">Alabama</option>
+                            ...
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            {% include "data_table.html" %}
+
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% include "footer.html" %}
+
+
+    <!-- This is where we have to write all the scripts for this page. other page scripts can't be written -->
+    <script>
+        $('body').ready(function () {
+
+        });
+
+        // Example axios post request
+        var example_axios_func = function () {
+            axios.post(window.location.origin + "/your/endpoint", { 'key': val, 'key2': val2 }).then(resp => {
+
+            });
+        }
+
+        $('.example-dropdown').select2();
+
+    </script>
+
+</body>
+
+</html>

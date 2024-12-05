@@ -1,0 +1,58 @@
+.row {
+    justify-content: center;  
+  }
+
+.my-btn{
+    width: 100px;
+    align-content: center;
+}
+.profile {
+  justify-content: left !important;
+}
+
+.rounded-circle{
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.id-card {
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+}
+.id-card img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.id-card .header-row {
+  margin-bottom: 20px;
+  align-items: center;
+}
+.id-card h5 {
+  margin: 0;
+  font-weight: bold;
+}
+.id-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+.id-card .icon {
+  margin-right: 8px;
+  color: #007bff;
+}
+.vertical-line {
+  border-left: 2px solid #ddd;
+  height: 100%;
+  margin: 0 auto;
+}
+.id-card hr {
+  margin: 20px 0;
+}

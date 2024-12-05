@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include "header.html" %}
+  <link rel="stylesheet" href="../public/css/course.css">
+  <title>Course Details</title>
+</head>
+<body>
+  <!-- Main Layout -->
+  <div class="d-flex" style="min-height: 100vh;">    
+
+    {% include "sidebar.html" %}
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Course Details</h3>        
+      </div>
+
+        <!-- Table for Desktop -->
+        <div class="table-container">
+          <table class="table table-bordered table-striped">
+            <thead class="thead table-primary">
+              <tr>
+                <th>Course Name</th>
+                <th>University</th>
+                <th>Duration</th>
+                <th>Course Type</th>
+                <th>Total Fee</th>
+                <th>Paid</th>
+                <th>Remaining</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ user_info.course }}</td>
+                <td>{{ user_info.university }}</td>
+                <td>1 Year</td>
+                <td>{{ course_info.course_type }}</td>
+                <td>{{ user_info.course_fee }}</td>
+                <td>{{ paid_amount }}</td>
+                <td>{{ user_info.course_fee - (paid_amount or 0) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <!-- Cards for Mobile -->
+        <div class="card-container">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ user_info.course }}</h5>
+              <p class="card-text">
+                <strong>University:</strong> {{ user_info.university }}<br>
+                <strong>Duration:</strong> 1 Year<br>
+                <strong>Course Type:</strong> {{ course_info.course_type }}<br>
+                <strong>Total Fee:</strong> {{ user_info.course_fee }}<br>
+                <strong>Paid:</strong> {{ paid_amount }}<br>
+                <strong>Remaining:</strong> {{ user_info.course_fee - (paid_amount or 0) }}
+              </p>
+            </div>
+          </div>      
+    </div>
+  </div>
+  
+  {% include "footer.html" %}
+
+
+  <!-- This is where we have to write all the scripts for this page. other page scripts can't be written here -->
+  <script>
+    $('body').ready(function(){
+
+    });
+  </script>
+
+</body>
+</html>

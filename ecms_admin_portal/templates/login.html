@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link href="../public/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../public/css/auth.css">
+</head>
+
+<body>
+  <div style="min-width: 400px;">
+    {% if status=='failed' %}
+      <div class="alert alert-danger" role="alert">
+        {{ message }}
+      </div>
+    {% endif %}
+    <br>
+    <div class="login-container">
+      <h2 class="login-title">Login</h2>
+      <form action="/auth/login" method="post" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="username" name="username" class="form-control" id="username" placeholder="Enter your username"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password"
+            required>
+        </div>
+        <div class="form-group forgot-password">
+          <a href="/auth/reset-pass">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../public/js/jquery-3.7.1.js"></script>
+  <script src="../public/js/popper.min.js"></script>
+  <script src="../public/js/bootstrap.min.js"></script>
+  <script src="../public/js/script.js"></script>
+</body>
+
+</html>

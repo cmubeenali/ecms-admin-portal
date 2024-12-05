@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <link href="../public/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../public/css/auth.css">
+</head>
+<body>
+
+<div class="registration-container">
+  <h2 class="text-center">Student Registration</h2>
+
+  <form action="/auth/register" method="post" enctype="multipart/form-data">
+    <!-- Basic Details Section -->
+    <div class="section-title">Basic Details</div>
+    
+    <div class="form-row">
+      <!-- <div class="form-group col-md-4">
+        <label for="id">ID</label>
+        <input type="text" name="id" class="form-control" id="id" placeholder="ID">
+      </div> -->
+      <div class="form-group col-md-6">
+        <label for="photo">Photo</label>
+        <input type="file" name="photo" class="form-control-file" id="photo" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="student_id">Student ID (Aadhaar/Passport)</label>
+        <input type="file" name="student_id" class="form-control-file" id="student_id" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="fatherName">Father's Name</label>
+        <input type="text" name="fatherName" class="form-control" id="fatherName" placeholder="Father's Name" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="motherName">Mother's Name</label>
+        <input type="text" name="motherName" class="form-control" id="motherName" placeholder="Mother's Name" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" class="form-control" id="firstName" placeholder="First Name" required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Last Name" required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="contactNumber">Contact Number</label>
+        <input type="tel" name="contactNumber" class="form-control" id="contactNumber" placeholder="Contact Number" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="emailId">Email ID</label>
+        <input type="email" name="emailId" class="form-control" id="emailId" placeholder="Email ID" required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="nationality">Nationality</label>
+        <select class="form-control" name="nationality" id="exampleFormControlSelect1" required>
+          <option>India</option>
+          <option>Qatar</option>
+          <option>United Arab Emirates</option>
+          <option>Nepal</option>
+          <option>Philippines</option>
+          <option>Sri Lanka</option>
+          <option>Bangladesh</option>
+          <option>Pakistan</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="pincode">Pincode</label>
+        <input type="text" name="pincode" class="form-control" id="pincode" placeholder="Pincode" required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="dob">Date of Birth</label>
+        <input type="date" name="dob" class="form-control" id="dob" required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="gender">Gender</label>
+        <select class="form-control" name="gender" id="exampleFormControlSelect1" required>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Permanent Address</label>
+      <textarea name="address" class="form-control" id="address" rows="2" placeholder="Permanent Address"></textarea required>
+    </div>
+
+    <!-- Service Details Section -->
+    <div class="section-title">Service Details</div>
+    
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="course">Course</label>
+        <select class="form-control" name="course" id="exampleFormControlSelect1" required>
+          {% for course in course_list %}
+          <option>{{ course }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="courseType">Course Type</label>
+        <select class="form-control" name="courseType" id="exampleFormControlSelect1" required>
+          <option>Regular</option>
+          <option>Fast Track</option>
+        </select>
+      </div>  
+      <div class="form-group col-md-4">
+        <label for="tenthCertificate">10th Certificate</label>
+        <input type="file" name="10th_certificate" class="form-control-file" id="10th_certificate" required>
+      </div>     
+      <div class="form-group col-md-4">
+        <label for="12th_certificate">12th Certificate</label>
+        <input type="file" name="12th_certificate" class="form-control-file" id="12th_certificate" required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="degree_certificate">Bachelors (Degree) Certificate</label>
+        <input type="file" name="degree_certificate" class="form-control-file" id="degree_certificate">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="migrationCertificate">Migration Certificate</label>
+        <input type="file" name="migration_certificate" class="form-control-file" id="migrationCertificate">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="MastersCertificate">Masters (PG) Certificate</label>
+        <input type="file" name="masters_certificate" class="form-control-file" id="MastersCertificate">
+      </div>
+    </div>
+
+    <div class="form-row">
+     
+     
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block mt-4">Submit Registration</button>
+  </form>
+</div>
+
+<script src="../public/js/jquery-3.7.1.js"></script>
+<script src="../public/js/popper.min.js"></script>
+<script src="../public/js/bootstrap.min.js"></script>
+</body>
+</html>

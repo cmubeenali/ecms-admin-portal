@@ -1,0 +1,18 @@
+ /* Style for cards on mobile */
+ @media (max-width: 768px) {
+    .table-container {
+      display: none;
+    }
+    .card-container {
+      display: block;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .card-container {
+      display: none;
+    }
+    .table-container {
+      display: block;
+    }
+  }
