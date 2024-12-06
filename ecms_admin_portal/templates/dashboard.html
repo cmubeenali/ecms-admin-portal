@@ -108,7 +108,7 @@
             secContent.appendChild(pageContent.firstElementChild);
             axios.post("/lead/rpt-lead", {}).then(resp => {
               const bodyData = document.getElementById('body-data');
-              
+
               console.log(resp);
               // Populate the table
               resp.data.data.forEach(lead => {
@@ -137,7 +137,7 @@
                     statusColor = 'gray';
                     break;
                 }
-                let elemExpander = `<span class="action-btn collapsed" onclick="frappe.lead_report.toggleDetails('${lead.lead_id}',this)">
+                let elemExpander = `<span class="action-btn collapsed" onclick="toggleDetails('${lead.lead_id}',this)">
 												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
 													<path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
 												</svg>
@@ -188,6 +188,42 @@
           });
       });
     });
+    function toggleDetails(id, elem) {
+      const nestedRow = document.getElementById(`details-${id}`);
+      const toggleButton = elem;
+
+      if (nestedRow.style.display === "none") {
+        nestedRow.style.display = "table-row";
+        toggleButton.classList.remove("collapsed");
+        toggleButton.classList.add("expanded");
+
+        fetch('/lead/rpt-lead-sess', { 'method': 'POST', 'headers': { 'Content-Type': 'application/json' }, 'body': JSON.stringify({ 'lead_id': id }) })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Failed to load table.html');
+            }
+            return response.text(); // Get the response as text
+          })
+          .then((htmlContent) => {
+            // Create a temporary element to parse the HTML content
+            const sessions = document.createElement('div');
+
+            sessions.innerHTML = htmlContent;
+
+            $(nestedRow).find('td').empty()
+            $(sessions).appendTo($(nestedRow).find('td'));
+
+            // Append the table from the fetched HTML to the container            
+          })
+          .catch((error) => {
+            console.error('Error loading the table:', error);
+          });
+      } else {
+        nestedRow.style.display = "none";
+        toggleButton.classList.remove("expanded");
+        toggleButton.classList.add("collapsed");
+      }
+    }
   </script>
 
 </body>

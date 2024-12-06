@@ -1,4 +1,4 @@
-import frappe, logging
+import frappe, logging, json
 
 
 class Lead:
@@ -29,3 +29,28 @@ class Lead:
             frappe.log_error("API_ERROR(LEAD_RPT) : " + str(err))
         finally:
             return app.json_response(json_data=resp)
+
+    def fetch_sessions_by_lead(self, app, req, args):
+        resp = {"status": "failed", "message": "Error occurred", "data": []}
+        try:
+            params = json.loads(req.data)
+            resp["data"] = frappe.db.sql(
+                """
+            select t1.session_title as title, t1.session_type as type, DATE_FORMAT(t1.session_scheduled_for,'%%b %%e, %%Y') as scheduled_for, t1.session_status as status,
+            IFNULL(t1.session_remark_summary,'N/A') as remark
+            from `tabSession` t1
+            where t1.session_lead=%s
+            order by t1.creation desc; 
+            """,
+                values=(params["lead_id"]),
+                as_dict=True,
+            )
+            resp["status"] = "success"
+            resp["message"] = "Fetched sessions successfully"
+        except Exception as err:
+            logging.error("API_ERROR(LEADRPT_RFSBL) : " + str(err))
+            frappe.log_error("API_ERROR(LEADRPT_RFSBL) : " + str(err))
+        finally:
+            return app.render_template(
+                req, "lead_report_sessions.html", {"sessions": resp["data"]}
+            )

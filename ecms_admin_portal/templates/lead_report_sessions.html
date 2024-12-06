@@ -1,0 +1,48 @@
+<table style="width: 100%;">
+    <thead>
+        <tr style="background-color: #252525 !important; color: #fff; font-weight: bold; padding: 0.75rem;">
+            <th>#</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Scheduled For</th>
+            <th>Status</th>
+            <th>Remark</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in sessions %}
+        <tr>
+            <td>
+                
+            </td>
+            <td>
+                {{ row.title }}
+            </td>
+            <td>
+                {{ row.type }}
+            </td>
+            <td>
+                {{ row.scheduled_for }}
+            </td>
+            <td>
+                <span class="ellipsis" title="Status: {{ row.status }}">
+                    {% if row.status=="Pending" %}
+                        <span class="filterable indicator-pill yellow ellipsis">
+                    {% endif %}
+                    {% if row.status=="Completed" %}
+                        <span class="filterable indicator-pill green ellipsis">
+                    {% endif %}
+                    {% if row.status=="Canceled" %}
+                        <span class="filterable indicator-pill red ellipsis">
+                    {% endif %}
+                        <span class="ellipsis"> {{ row.status }} </span>
+                    </span>
+                </span>                
+            </td>
+            <td>
+                {{ row.remark }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

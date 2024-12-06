@@ -18,7 +18,7 @@ class App(object):
     def __init__(self):
         self.url_map = Map(
             [
-                Rule("/", endpoint="module"),
+                Rule("/", endpoint="home"),
                 Rule("/<mod_name>", endpoint="module"),
                 Rule("/<mod_name>/", endpoint="module"),
                 Rule("/<mod_name>/<action>", endpoint="module"),
@@ -136,7 +136,7 @@ class App(object):
                 if req.session["_is_logged"] == False:
                     return self.not_found(req, args)
                 elif req.session["_is_logged"] == True:
-                    return self.home(req, args)
+                    return self.not_found(req, args)
         except Exception as err:
             logging.error(
                 "Oops!. something went wrong : "
@@ -174,9 +174,21 @@ class App(object):
                         request.session["sess_modified"] = new_sess_modified
                         update_sess_modified(sid=sid, sess_modified=new_sess_modified)
 
-            self.init_frappe(request)
-            resp = self.dispatch_request(request)
-            self.kill_frappe()
+            resp = None
+            path_split = request.path.strip().split("/")
+            if len(path_split) == 3:
+                if path_split[1].strip() == "template":
+                    params = {}
+                    if request.data.decode("utf-8").strip() != "":
+                        params = json.loads(request.data)
+                    resp = self.render_template(
+                        req=request, template_name=path_split[2], _ret_vals=params
+                    )
+
+            if resp is None:
+                self.init_frappe(request)
+                resp = self.dispatch_request(request)
+                self.kill_frappe()
 
             if sid is None and request.session["sid"] != None:
                 resp.set_cookie(
@@ -197,9 +209,5 @@ def make_app():
         {
             "/public": os.path.join(os.path.dirname(__file__), "public"),
         },
-    )
-    app.wsgi_app = SharedDataMiddleware(
-        app.wsgi_app,
-        {"/template": os.path.join(os.path.dirname(__file__), "templates")},
     )
     return app

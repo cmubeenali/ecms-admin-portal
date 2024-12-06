@@ -13,4 +13,5 @@ url_mod_action = {
     "change-pass": "change_password",
     "reset-pass": "reset_password",
     "rpt-lead": "fetch_lead_report",
+    "rpt-lead-sess": "fetch_sessions_by_lead",
 }
