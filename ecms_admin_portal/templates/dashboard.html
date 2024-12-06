@@ -79,14 +79,113 @@
       </ul>
     </div>
   </div>
+  <section id="page-content">
+
+  </section>
 
 
   {% include "footer.html" %}
 
   <script>
     $('body').ready(function () {
-      $('#leadReport').click(function(){
-        console.log('ethi');
+      $('#leadReport').click(function () {
+        fetch('/template/lead_report.html')
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Failed to load table.html');
+            }
+            return response.text(); // Get the response as text
+          })
+          .then((htmlContent) => {
+            // Create a temporary element to parse the HTML content
+            const pageContent = document.createElement('div');
+
+            pageContent.innerHTML = htmlContent;
+
+            // Append the table from the fetched HTML to the container
+            let secContent = document.getElementById('page-content');
+            $(secContent).empty();
+            secContent.appendChild(pageContent.firstElementChild);
+            axios.post("/lead/rpt-lead", {}).then(resp => {
+              const bodyData = document.getElementById('body-data');
+              
+              console.log(resp);
+              // Populate the table
+              resp.data.data.forEach(lead => {
+                const row = document.createElement("tr");
+                let statusColor = "gray"
+                switch (lead.lead_status) {
+                  case 'Discussion':
+                    statusColor = 'cyan'
+                    break;
+                  case 'Interested':
+                  case 'Converted':
+                  case 'Office Visit Asked':
+                    statusColor = 'green'
+                    break;
+                  case 'Not Interested':
+                  case 'Course Not Liked':
+                  case 'Course Fee Issue':
+                    statusColor = 'red'
+                    break;
+                  case 'Will Callback':
+                  case 'Will Update Later':
+                  case 'Call Not Connected':
+                    statusColor = 'yellow'
+                    break;
+                  default:
+                    statusColor = 'gray';
+                    break;
+                }
+                let elemExpander = `<span class="action-btn collapsed" onclick="frappe.lead_report.toggleDetails('${lead.lead_id}',this)">
+												<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+													<path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
+												</svg>
+											</span>`;
+                if (lead.follow_up_count == 0) {
+                  elemExpander = "";
+                }
+                row.innerHTML = `
+								<td>${lead.lead_full_name}</td>
+								<td>${lead.lead_phone_number}</td>
+								<td>${lead.lead_nationality}</td>
+								<td>${lead.lead_date}</td>
+								<td>
+									<span class="ellipsis" title="Status: ${lead.lead_status}">
+										<span class="filterable indicator-pill ${statusColor} ellipsis">											
+											<span class="ellipsis"> ${lead.lead_status} </span>
+										</span>
+									</span>
+								</td>
+								<td>${lead.last_session_remark}</td>
+								<td>${lead.follow_up_count}</td>
+								<td>
+									${elemExpander}
+								</td>
+							`;
+                bodyData.appendChild(row);
+
+                // Nested row for additional details
+                const nestedRow = document.createElement("tr");
+                nestedRow.classList.add("nested-row");
+                nestedRow.id = `details-${lead.lead_id}`;
+                nestedRow.style.display = "none";
+                nestedRow.innerHTML = `
+								<td colspan="8" style="text-align:center; background-color:#efefef;">
+									<div class="snippet" data-title="dot-pulse">
+										<div class="stage">
+											<div class="dot-pulse"></div>
+										</div>
+									</div>
+								</td>
+							`;
+                bodyData.appendChild(nestedRow);
+              });
+            });
+          })
+          .catch((error) => {
+            console.error('Error loading the table:', error);
+          });
       });
     });
   </script>
