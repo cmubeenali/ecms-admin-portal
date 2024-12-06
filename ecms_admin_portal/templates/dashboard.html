@@ -4,6 +4,7 @@
 <head>
   {% include "header.html" %}
   <link rel="stylesheet" href="../public/css/dashboard.css">
+  <link rel="stylesheet" href="../public/css/lead_report.css">
   <title>Dashboard</title>
 </head>
 
@@ -27,7 +28,7 @@
       </div>
 
       <!-- Logout Link -->
-      <a href="#" class="logout-link" id="logout">Logout</a>
+      <a href="/auth/logout" class="logout-link" id="logout">Logout</a>
     </div>
   </nav>
 
@@ -74,6 +75,7 @@
       <h4>Reports</h4>
       <ul>
         <li><a href="#" class="shortcut-link" id="leadReport">Lead Report</a></li>
+        <li><a href="#" class="shortcut-link" id="courseFeeReport">Course Fee Report</a></li>
       </ul>
     </div>
   </div>
@@ -81,7 +83,13 @@
 
   {% include "footer.html" %}
 
-
+  <script>
+    $('body').ready(function () {
+      $('#leadReport').click(function(){
+        console.log('ethi');
+      });
+    });
+  </script>
 
 </body>
 
