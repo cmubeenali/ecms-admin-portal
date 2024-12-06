@@ -7,12 +7,11 @@ from pymongo import MongoClient
 from frappe.utils.background_jobs import enqueue
 from frappe.exceptions import DoesNotExistError
 from frappe.core.doctype.user.user import User
-from frappe.utils.password import update_password, check_password
 
 from cms_web.consultancy_management_portal.doctype.enrollment.enrollment import (
     generate_password,
 )
-from ecms_applicant_portal.config.session import new_session
+from ecms_admin_portal.config.session import new_session
 
 import json, os, io, frappe, logging
 
@@ -55,68 +54,7 @@ class Auth:
             logging.error("ECMSAP_ERROR(AUTH_LOGIN) : " + str(err))
             frappe.log_error("ECMSAP_ERROR(AUTH_LOGIN) : " + str(err))
 
-        return app.render_template(req, "login.html", resp)
-
-    def register(self, app, req, args):
-        try:
-            course_list = frappe.db.get_list("Course", pluck="name")
-            context = {"course_list": course_list}
-            if req.form and req.files:
-                model = {
-                    "doctype": "Enrollment",
-                    "father_name": req.form.get("fatherName"),
-                    "contact_number": req.form.get("contactNumber"),
-                    "mother_name": req.form.get("motherName"),
-                    "pin_code": req.form.get("pincode"),
-                    "first_name": req.form.get("firstName"),
-                    "last_name": req.form.get("lastName"),
-                    "email_id": req.form.get("emailId"),
-                    "nationality": req.form.get("nationality"),
-                    "date_of_birth": req.form.get("dob"),
-                    "permanent_address": req.form.get("address"),
-                    "course": req.form.get("course"),
-                    "course_type": req.form.get("courseType"),
-                    "gender": req.form.get("gender"),
-                    "service": "Online Course",
-                }
-
-                doc = frappe.get_doc(model)
-                doc.insert()
-
-                # Loop through each file in req.files and save it to the system
-                for file_key, file_storage in req.files.items():
-                    if file_storage:
-                        # Get the file content
-                        file_content = io.BytesIO(file_storage.read())
-
-                        # Define the file document, dynamically setting the "attached_to_field"
-                        file_doc = frappe.get_doc(
-                            {
-                                "doctype": "File",
-                                "file_name": file_storage.filename,
-                                "attached_to_doctype": "Enrollment",
-                                "attached_to_name": doc.name,  # Attach to the Enrollment document
-                                "attached_to_field": file_key,  # Use the file key as the field name
-                                "content": file_content.getvalue(),
-                                "is_private": True,  # Set based on requirements
-                            }
-                        )
-
-                        # Insert the file document
-                        file_doc.insert()
-
-                        doc.update({file_key: file_doc.file_url})
-
-                doc.save()  # Save updates to the document
-                frappe.db.commit()
-
-                context["applicant_id"] = doc.enrollment_id
-
-                return app.render_template(req, "status.html", context)
-        except Exception as err:
-            logging.error("ECMSAP_ERROR(AUTH_REG) : " + str(err))
-            frappe.log_error("ECMSAP_ERROR(AUTH_REG) : " + str(err))
-        return app.render_template(req, "register.html", context)
+        return app.render_template(req, "login.html", resp)    
 
     def logout(self, app, req, args):
         try:

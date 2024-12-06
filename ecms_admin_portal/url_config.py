@@ -3,7 +3,6 @@ url_mod={
     'dash':['dashboard','Dashboard'],
     'example':['example','Example'],
     'user-profile':['user_profile','UserProfile'],
-    'user-profile':['user_profile','UserProfile'],
 }
 
 url_mod_action={

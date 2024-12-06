@@ -5,10 +5,10 @@ from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.shared_data import SharedDataMiddleware
 from datetime import datetime, timedelta
 
-from ecms_applicant_portal.url_config import url_mod, url_mod_action
-from ecms_applicant_portal.config.session import validate_session, update_sess_modified
-from ecms_applicant_portal.modules.auth import Auth
-from ecms_applicant_portal.modules.dashboard import Dashboard
+from ecms_admin_portal.url_config import url_mod, url_mod_action
+from ecms_admin_portal.config.session import validate_session, update_sess_modified
+from ecms_admin_portal.modules.auth import Auth
+from ecms_admin_portal.modules.dashboard import Dashboard
 
 import logging, os, json, frappe
 
@@ -99,7 +99,7 @@ class App(object):
                 # _mod_path='modules.'+_components[0]+_components[1]  : use this code when multiple packages comes up.
                 _mod_action = args.get('action')
                 if _mod_action is None:
-                    _mod_obj = __import__('ecms_applicant_portal.modules.'+_mod)
+                    _mod_obj = __import__('ecms_admin_portal.modules.'+_mod)
                     _mod_obj = getattr(_mod_obj,'modules')
                     for component in _components:
                         _mod_obj = getattr(_mod_obj, component)
@@ -110,7 +110,7 @@ class App(object):
                     if _action is None:
                         return self.not_found(req, args)
                     elif _action is not None:
-                        _mod_obj = __import__('ecms_applicant_portal.modules.'+_mod)
+                        _mod_obj = __import__('ecms_admin_portal.modules.'+_mod)
                         _mod_obj = getattr(_mod_obj,'modules')
                         for component in _components:
                             _mod_obj = getattr(_mod_obj, component)

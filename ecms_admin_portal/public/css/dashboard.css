@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../font/Poppins/Poppins-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.container{
+    max-width: 1280px !important;
+}
+
+.logout-link {
+    color: #dc3545;
+    text-decoration: none;
+}
+.logout-link:hover {
+    text-decoration: underline;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;    
+    color: white;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.shortcut-link {
+    text-decoration: none;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.shortcut-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}

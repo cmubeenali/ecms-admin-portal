@@ -1,5 +1,5 @@
 import logging
-from ecms_applicant_portal.server import make_app
+from ecms_admin_portal.server import make_app
 
 logging.root.setLevel(logging.NOTSET)
 
